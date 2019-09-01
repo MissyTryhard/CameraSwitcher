@@ -1,12 +1,12 @@
 import maya.cmds as mc
 import os
 import re
-#from functools import partial
+from functools import partial
 
 '''
 public Vars
 '''
-newPath = r'/Users/Lopakka/Documents/Py4Maya/Test/'
+newPath = r'/Users/Lopakka/Documents/Py4Maya/TestFolder/'
 btnListNames = []
 cameras = mc.ls(type=('camera'), sn=True)
 startupCams = [camera for camera in cameras if mc.camera(mc.listRelatives(camera, parent=True)[0], startupCamera=True, q=True)]
@@ -71,6 +71,15 @@ def GrabKey( *args):
     mc.playblast(startTime = firstKey, endTime=lastKey)
     #mc.selectKey('Camera_A', time=(firstKey, lastKey)) #selects keys but not very well; its hard to pass node name; returns the curves selected in GE
 
+def Refresh(*args):
+    '''
+    Should refresh the UI and add any new cameras that are added
+    to the scene
+    '''
+
+def CreateFolders( *args):
+    print("value")
+
 
 
 def CreateWindow():
@@ -83,7 +92,13 @@ def CreateWindow():
     PutButtonsInUI()  
     mc.separator( style='none', height=16 )
     grabKeys = mc.button( label="Blasting", c=GrabKey ) ### https://stackoverflow.com/questions/22848582/maya-python-pass-variable-on-button-press#22859613
-    #blasting = mc.button( label="Blasting" )
+    refrsh = mc.button( label="Refresh", c=Refresh )
+
+    mc.separator( style='none', height=16 )
+    myTextfield = cmds.textField( fi = 'C:\Users\Lopakka\Documents\Py4Maya\TestFolder')
+    print(myTextfield)
+    createFoldersBut = mc.button(label="Create Folders", c =CreateFolders)
+
     mc.showWindow(windowID)
     
 
